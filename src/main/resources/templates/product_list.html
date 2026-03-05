@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>商品一覧 | LxL</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/product-list.css}">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/}" class="header-logo">
+		   <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+	  </a>
+      <nav class="header-nav">
+        <a th:href="@{/products(category='new')}">New</a>
+        <a th:href="@{/products(category='tops')}">Tops</a>
+        <a th:href="@{/products(category='bottoms')}">Bottoms</a>
+        <a th:href="@{/products(category='outer')}">Outer</a>
+        <a th:href="@{/products(category='sale')}">Sale</a>
+      </nav>
+      <div class="header-actions">
+        <a th:href="@{/login}"  th:if="${loginUser == null}">Login</a>
+        <a th:href="@{/logout}" th:if="${loginUser != null}">Logout</a>
+        <a th:href="@{/cart}" class="cart-link">
+          Cart
+          <span class="badge" th:text="${cartCount}">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="page-body">
+
+    <!-- ページタイトル -->
+    <div class="list-page-header">
+      <div class="container">
+        <h1 class="list-page-title"
+            th:text="${currentCategory == 'all'} ? 'All Items' : ${currentCategory}">All Items</h1>
+        <p class="list-page-sub"
+           th:text="${currentCategory == 'all'} ? '全商品' : ${currentCategory}">全商品</p>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- パンくず -->
+      <nav class="breadcrumb">
+        <a th:href="@{/}">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current"
+              th:text="${currentCategory == 'all'} ? 'All Items' : ${currentCategory}">All Items</span>
+      </nav>
+
+      <!-- フィルターバー -->
+      <div class="filter-bar">
+        <div class="filter-bar-left">
+          <p class="filter-count">
+            <span th:text="${productCount}">0</span> 件の商品
+          </p>
+          <div class="filter-chips">
+            <a th:href="@{/products}"                      th:classappend="${currentCategory == 'all'}     ? 'active'" class="filter-chip">All</a>
+            <a th:href="@{/products(category='tops')}"     th:classappend="${currentCategory == 'tops'}    ? 'active'" class="filter-chip">Tops</a>
+            <a th:href="@{/products(category='bottoms')}"  th:classappend="${currentCategory == 'bottoms'} ? 'active'" class="filter-chip">Bottoms</a>
+            <a th:href="@{/products(category='outer')}"    th:classappend="${currentCategory == 'outer'}   ? 'active'" class="filter-chip">Outer</a>
+            <a th:href="@{/products(category='sale')}"     th:classappend="${currentCategory == 'sale'}    ? 'active'" class="filter-chip">Sale</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 商品グリッド -->
+      <div class="product-grid-list" th:if="${not #lists.isEmpty(products)}">
+        <a th:each="product : ${products}"
+           th:href="@{/products/{id}(id=${product.id})}"
+           class="product-card">
+          <div class="product-card-img">
+            <img th:src="@{/images/products/{img}(img=${product.imageUrl})}"
+                 th:alt="${product.name}">
+            <span class="product-card-badge"     th:if="${product.new}">New</span>
+            <span class="product-card-badge sale" th:if="${product.onSale}">Sale</span>
+          </div>
+          <div class="product-card-info">
+            <p class="product-card-name" th:text="${product.name}">商品名</p>
+            <!-- 通常価格 -->
+            <p class="product-card-price" th:if="${!product.onSale}"
+               th:text="|¥${#numbers.formatInteger(product.price, 1, 'COMMA')}|">¥0</p>
+            <!-- セール価格 -->
+            <p class="product-card-price" th:if="${product.onSale}">
+              <span class="price-original"
+                    th:text="|¥${#numbers.formatInteger(product.originalPrice, 1, 'COMMA')}|">¥0</span>
+              <span class="price-sale"
+                    th:text="|¥${#numbers.formatInteger(product.salePrice, 1, 'COMMA')}|">¥0</span>
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- 商品がない場合 -->
+      <div class="empty-state" th:if="${#lists.isEmpty(products)}">
+        <p class="empty-state-text">該当する商品が見つかりませんでした。</p>
+        <a th:href="@{/products}" class="btn btn-outline">全商品を見る</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="footer-logo">LxL</p>
+          <p>シンプルで本質的なメンズファッションを。<br>素材と余白にこだわったスタイルを提案します。</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Shop</h4>
+            <ul>
+              <li><a th:href="@{/products(category='new')}">New Arrivals</a></li>
+              <li><a th:href="@{/products(category='tops')}">Tops</a></li>
+              <li><a th:href="@{/products(category='bottoms')}">Bottoms</a></li>
+              <li><a th:href="@{/products(category='outer')}">Outer</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-group">
+            <h4>Account</h4>
+            <ul>
+              <li><a th:href="@{/login}">ログイン</a></li>
+              <li><a th:href="@{/register}">新規会員登録</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 LxL. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+</body>
+</html>

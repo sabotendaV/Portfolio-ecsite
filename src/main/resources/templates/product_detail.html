@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${product.name}">商品詳細 | LxL</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/product-detail.css}">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/}" class="header-logo">
+		   <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+	  </a>
+      <nav class="header-nav">
+        <a th:href="@{/products(category='new')}">New</a>
+        <a th:href="@{/products(category='tops')}">Tops</a>
+        <a th:href="@{/products(category='bottoms')}">Bottoms</a>
+        <a th:href="@{/products(category='outer')}">Outer</a>
+        <a th:href="@{/products(category='sale')}">Sale</a>
+      </nav>
+      <div class="header-actions">
+        <a th:href="@{/login}"  th:if="${loginUser == null}">Login</a>
+        <a th:href="@{/logout}" th:if="${loginUser != null}">Logout</a>
+        <a th:href="@{/cart}" class="cart-link">
+          Cart
+          <span class="badge" th:text="${cartCount}">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="page-body">
+    <div class="container">
+
+      <!-- パンくず -->
+      <nav class="breadcrumb">
+        <a th:href="@{/}">Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <a th:href="@{/products}">All Items</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" th:text="${product.name}">商品名</span>
+      </nav>
+
+      <!-- 詳細レイアウト -->
+      <div class="detail-layout">
+
+        <!-- 左：画像 -->
+        <div class="detail-images">
+          <div class="main-image">
+            <img th:src="@{/images/products/{img}(img=${product.imageUrl})}"
+                 th:alt="${product.name}">
+            <span class="product-card-badge"      th:if="${product.new}">New</span>
+            <span class="product-card-badge sale"  th:if="${product.onSale}">Sale</span>
+          </div>
+        </div>
+
+        <!-- 右：商品情報 -->
+        <div class="detail-info">
+          <p class="detail-category" th:text="${product.category}">Category</p>
+          <h1 class="detail-name"    th:text="${product.name}">商品名</h1>
+
+          <!-- 通常価格 -->
+          <p class="detail-price" th:if="${!product.onSale}">
+            <span th:text="|¥${#numbers.formatInteger(product.price, 1, 'COMMA')}|">¥0</span>
+            <span class="detail-price-tax">（税込）</span>
+          </p>
+          <!-- セール価格 -->
+          <p class="detail-price" th:if="${product.onSale}">
+            <span class="price-original"
+                  th:text="|¥${#numbers.formatInteger(product.originalPrice, 1, 'COMMA')}|">¥0</span>
+            <span class="price-sale"
+                  th:text="|¥${#numbers.formatInteger(product.salePrice, 1, 'COMMA')}|">¥0</span>
+            <span class="detail-price-tax">（税込）</span>
+          </p>
+
+          <div class="detail-divider"></div>
+
+          <!-- カートに入れるフォーム -->
+          <form th:action="@{/cart/add}" method="post">
+            <input type="hidden" name="productId" th:value="${product.id}">
+
+            <div class="detail-option">
+              <p class="detail-option-label">数量</p>
+              <div class="quantity-control">
+                <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                <input type="number" class="qty-input" name="quantity" id="qtyInput"
+                       value="1" min="1" th:max="${product.stock}" readonly>
+                <button type="button" class="qty-btn" id="qtyPlus">+</button>
+              </div>
+            </div>
+
+            <!-- 在庫あり -->
+            <button type="submit" class="btn btn-primary btn-block add-to-cart-btn"
+                    th:if="${product.stock > 0}">
+              カートに入れる
+            </button>
+            <!-- 在庫なし -->
+            <button type="button" class="btn btn-primary btn-block add-to-cart-btn"
+                    th:if="${product.stock <= 0}" disabled>
+              在庫切れ
+            </button>
+          </form>
+
+          <div class="detail-divider"></div>
+
+          <!-- 商品説明 -->
+          <p class="detail-short-desc" th:text="${product.description}">商品説明</p>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="footer-logo">LxL</p>
+          <p>シンプルで本質的なメンズファッションを。</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Shop</h4>
+            <ul>
+              <li><a th:href="@{/products(category='new')}">New Arrivals</a></li>
+              <li><a th:href="@{/products(category='tops')}">Tops</a></li>
+              <li><a th:href="@{/products(category='bottoms')}">Bottoms</a></li>
+              <li><a th:href="@{/products(category='outer')}">Outer</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 LxL. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+    const qtyInput = document.getElementById('qtyInput');
+    document.getElementById('qtyMinus').addEventListener('click', () => {
+      if (parseInt(qtyInput.value) > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
+    });
+    document.getElementById('qtyPlus').addEventListener('click', () => {
+      const max = parseInt(qtyInput.max);
+      if (parseInt(qtyInput.value) < max) qtyInput.value = parseInt(qtyInput.value) + 1;
+    });
+  </script>
+</body>
+</html>

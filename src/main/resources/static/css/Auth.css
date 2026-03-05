@@ -1,0 +1,248 @@
+/* ============================================
+   LxL - auth.css
+   ログイン・会員登録共通スタイル
+   ============================================ */
+
+.auth-body {
+  background: var(--color-bg-light);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+}
+
+/* ---------- カード ---------- */
+.auth-wrap {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 48px 40px;
+  text-align: center;
+}
+
+.auth-wrap-wide {
+  max-width: 480px;
+}
+
+/* ---------- ロゴ ---------- */
+.auth-logo {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.auth-subtitle {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 36px;
+}
+
+/* ---------- フォーム ---------- */
+.auth-form {
+  text-align: left;
+}
+
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+/* パスワードフィールド */
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap .form-control {
+  padding-right: 48px;
+}
+
+.pw-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-secondary);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color var(--transition);
+}
+
+.pw-toggle:hover {
+  color: var(--color-primary);
+}
+
+/* ヒントテキスト */
+.form-hint {
+  font-size: 0.68rem;
+  color: var(--color-secondary);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
+}
+
+/* ログイン状態保持・パスワード忘れ */
+.auth-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+
+.remember-check {
+  accent-color: var(--color-primary);
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.forgot-link {
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.forgot-link:hover {
+  color: var(--color-primary);
+  opacity: 1;
+}
+
+/* 規約チェックボックス */
+.terms-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--color-secondary);
+  cursor: pointer;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+}
+
+.terms-label input[type="checkbox"] {
+  accent-color: var(--color-primary);
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.terms-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 送信ボタン */
+.auth-submit-btn {
+  height: 52px;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+}
+
+/* ---------- OR 区切り ---------- */
+.auth-divider {
+  position: relative;
+  text-align: center;
+  margin: 28px 0 24px;
+}
+
+.auth-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth-divider span {
+  position: relative;
+  background: var(--color-bg);
+  padding: 0 16px;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+/* ---------- 切替リンク ---------- */
+.auth-switch {
+  font-size: 0.78rem;
+  color: var(--color-secondary);
+  letter-spacing: 0.04em;
+}
+
+.auth-switch a {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.auth-guest-link {
+  display: block;
+  margin-top: 16px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--color-secondary);
+  text-align: center;
+}
+
+.auth-guest-link:hover {
+  color: var(--color-primary);
+  opacity: 1;
+}
+
+/* 2カラム名前入力 */
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* 必須マーク */
+.form-required {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .auth-wrap {
+    padding: 36px 24px;
+  }
+
+  .auth-wrap-wide {
+    max-width: 100%;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

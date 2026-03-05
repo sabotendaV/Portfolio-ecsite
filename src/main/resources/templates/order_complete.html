@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja"  xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注文完了 | LxL</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/checkout.css}">
+  <style>
+    .complete-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - var(--header-height) - 200px);
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .complete-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 1px solid var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 32px;
+      animation: scaleIn 0.5s ease both;
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .complete-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+    .complete-msg {
+      font-size: 0.85rem;
+      color: var(--color-secondary);
+      line-height: 2;
+      margin-bottom: 8px;
+    }
+    .complete-order-num {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--color-secondary);
+      margin-bottom: 48px;
+    }
+    .complete-order-num span {
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+    .complete-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header checkout-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/index}" class="header-logo">
+		   <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+	  </a>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+  <main class="page-body">
+    <div class="complete-wrap">
+      <div class="complete-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M6 16l7 7 13-13" stroke="#111" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1 class="complete-title">ご注文ありがとうございます</h1>
+      <p class="complete-msg">
+        ご注文を承りました。<br>
+        確認メールをお送りしましたのでご確認ください。
+      </p>
+      <!-- 注文番号（Thymeleaf指示書参照） -->
+      <p class="complete-order-num">注文番号：<span>#LXL-20240001</span></p>
+      <div class="complete-actions">
+        <a href="/mypage/orders" class="btn btn-outline">注文履歴を見る</a>
+        <a href="/index.html" class="btn btn-primary">トップへ戻る</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

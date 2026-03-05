@@ -1,0 +1,351 @@
+/* ============================================
+   LxL - checkout.css
+   購入ページ専用スタイル
+   ============================================ */
+
+/* ---------- ヘッダー（シンプル版） ---------- */
+.checkout-header .header-nav,
+.checkout-header .header-actions {
+  display: none;
+}
+
+.checkout-back-link {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
+  text-align: right;
+}
+
+/* ---------- ステップインジケーター ---------- */
+.checkout-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 32px 0 48px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.step.active .step-num {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.step.done .step-num {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.step-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.step.active .step-label {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.step-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 16px;
+  margin-bottom: 24px;
+}
+
+/* ---------- 2カラムレイアウト ---------- */
+.checkout-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 64px;
+  align-items: start;
+  padding-bottom: 80px;
+}
+
+/* ---------- フォームセクション ---------- */
+.checkout-section {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.checkout-section-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-required {
+  color: var(--color-error);
+  margin-left: 2px;
+}
+
+.postal-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.postal-row .form-control {
+  flex: 1;
+}
+
+.postal-search-btn {
+  white-space: nowrap;
+  padding: 12px 16px;
+  font-size: 0.72rem;
+}
+
+/* ---------- 支払いオプション ---------- */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+
+.payment-option:hover,
+.payment-option.selected {
+  border-color: var(--color-primary);
+}
+
+.payment-radio {
+  margin-top: 3px;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.payment-option-body {
+  flex: 1;
+}
+
+.payment-option-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.payment-option-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+.card-icons {
+  display: flex;
+  gap: 6px;
+}
+
+.card-icon {
+  padding: 2px 6px;
+  border: 1px solid var(--color-border);
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  letter-spacing: 0.05em;
+}
+
+.payment-option-desc {
+  font-size: 0.75rem;
+  color: var(--color-secondary);
+  margin-top: 6px;
+  letter-spacing: 0.03em;
+}
+
+.card-fields {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+}
+
+.card-fields .form-group {
+  margin-bottom: 16px;
+}
+
+/* ---------- 注文確定ボタン ---------- */
+.checkout-submit-btn {
+  height: 56px;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-top: 8px;
+}
+
+/* ---------- 注文サマリー（右カラム） ---------- */
+.checkout-order-summary {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  border: 1px solid var(--color-border);
+  padding: 32px;
+}
+
+/* cart-summary-title は cart.css から継承 */
+.cart-summary-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-item {
+  display: flex;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-item-img {
+  width: 64px;
+  height: 84px;
+  overflow: hidden;
+  background: var(--color-bg-light);
+  flex-shrink: 0;
+}
+
+.order-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.order-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 2px;
+}
+
+.order-item-name {
+  font-size: 0.82rem;
+  color: var(--color-primary);
+  font-weight: 400;
+}
+
+.order-item-variant {
+  font-size: 0.7rem;
+  color: var(--color-secondary);
+}
+
+.order-item-price {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  margin-top: auto;
+}
+
+.order-totals {
+  padding-top: 8px;
+}
+
+.cart-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.8rem;
+  color: var(--color-secondary);
+}
+
+.cart-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.cart-total-price {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .checkout-layout {
+    grid-template-columns: 1fr 300px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .checkout-order-summary {
+    position: static;
+    order: -1;
+  }
+
+  .checkout-section {
+    padding: 24px 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

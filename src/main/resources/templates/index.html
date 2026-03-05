@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LxL | メンズファッション</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/index}" class="header-logo">
+		  <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+		</a>
+
+      <nav class="header-nav">
+        <a th:href="@{/products(category='new')}">New</a>
+        <a th:href="@{/products(category='tops')}">Tops</a>
+        <a th:href="@{/products(category='bottoms')}">Bottoms</a>
+        <a th:href="@{/products(category='outer')}">Outer</a>
+        <a th:href="@{/products(category='sale')}">Sale</a>
+      </nav>
+
+      <div class="header-actions">
+        <!--  未ログイン：login表示 -->
+        <a th:href="@{/login}" 
+        	th:if="${loginUser == null}" sec:authorize="!isAuthenticated()">Login</a>
+        
+        <!-- ログイン済み：mypage表示 ：login表示 -->
+        <a th:href="@{/logout}"
+        th:if = "${loginUser != null}" sec:authorize="isAuthenticated()">Logout</a>
+        <a th:href="@{/cart}" class="cart-link">
+          Cart
+           <span class="badge"
+              th:text="${cartCount}">0</span>
+        </a>
+      </div>
+
+      <button class="header-menu-btn" id="menuBtn" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="page-body">
+
+    <!-- ① ヒーローセクション -->
+    <section class="hero">
+      <div class="hero-inner">
+        <!-- 画像はご自身で用意した画像のパスに変更してください -->
+        <img th:src="@{images/Main_image.png}" alt="LxL Hero" class="hero-img">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="hero-eyebrow">2024 Spring / Summer Collection</p>
+          <h1 class="hero-title">Define<br>Your Form.</h1>
+          <a th:href="@{/products(category='tops')}" class="btn btn-outline hero-btn">Shop Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② カテゴリバナー -->
+    <section class="section category-section">
+      <div class="container">
+        <div class="category-grid">
+
+          <a th:href="@{/products(category='tops')}" class="category-card">
+            <div class="category-card-img">
+              <img th:src="@{images/products/overt-shirt.png}" alt="Tops">
+            </div>
+            <div class="category-card-label">
+              <span>Tops</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+          </a>
+
+          <a th:href="@{/products(category='bottoms')}" class="category-card">
+            <div class="category-card-img">
+              <img th:src="@{/images/products/tシャツ.jpg}" alt="Bottoms">
+            </div>
+            <div class="category-card-label">
+              <span>Bottoms</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+          </a>
+
+          <a th:href="@{/products(category='outer')}" class="category-card">
+            <div class="category-card-img">
+              <img th:src="@{/images/products/outer1.png}" alt="Outer">
+            </div>
+            <div class="category-card-label">
+              <span>Outer</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ 新着商品 NEW ARRIVALS -->
+    <section class="section new-arrivals">
+      <div class="container">
+        <h2 class="section-title">New Arrivals</h2>
+        <p class="section-sub">最新アイテム</p>
+
+        <div class="product-grid">
+          <!-- 商品カード（Thymeleafでループ生成 → 指示書参照） -->
+          <!-- 以下はダミーカード4枚 -->
+
+          <a href="/product-detail.html" class="product-card">
+            <div class="product-card-img">
+              <img th:src="@{images/products/blackshirt2.png}" alt="商品名">
+              <span class="product-card-badge">New</span>
+            </div>
+            <div class="product-card-info">
+              <p class="product-card-name">Oversized Black Shirt</p>
+              <p class="product-card-price">¥12,800</p>
+            </div>
+          </a>
+
+          <a href="/product-detail.html" class="product-card">
+            <div class="product-card-img">
+              <img th:src="@{images/products/whiteshirt2.png}" alt="商品名">
+              <span class="product-card-badge">New</span>
+            </div>
+            <div class="product-card-info">
+              <p class="product-card-name">White Tshirt</p>
+              <p class="product-card-price">¥12,800</p>
+            </div>
+          </a>
+
+          <a href="/product-detail.html" class="product-card">
+            <div class="product-card-img">
+              <img th:src="@{images/products/windowbreaker.png}" alt="商品名">
+            </div>
+            <div class="product-card-info">
+              <p class="product-card-name">Wool Blend Coat</p>
+              <p class="product-card-price">¥42,000</p>
+            </div>
+          </a>
+
+          <a href="/product-detail.html" class="product-card">
+            <div class="product-card-img">
+              <img th:src="@{images/products/blackhoodie.png}" alt="商品名">
+              <span class="product-card-badge sale">Sale</span>
+            </div>
+            <div class="product-card-info">
+              <p class="product-card-name">Cotton Mock Neck Tee</p>
+              <p class="product-card-price">
+                <span class="price-original">¥6,800</span>
+                <span class="price-sale">¥4,500</span>
+              </p>
+            </div>
+          </a>
+
+        </div>
+
+        <div class="new-arrivals-more">
+          <a href="/product-list.html" class="btn btn-outline">View All Items</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ コンセプトバナー -->
+    <section class="concept-section">
+      <div class="concept-inner">
+        <div class="concept-text">
+          <p class="concept-eyebrow">Our Concept</p>
+          <h2 class="concept-title">Less is<br>More.</h2>
+          <p class="concept-body">
+            余白と素材の質で語る。<br>
+            LxL は、本質だけを纏うスタイルを提案します。
+          </p>
+          <a href="/product-list.html" class="btn btn-primary">Explore</a>
+        </div>
+        <div class="concept-img">
+          
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="footer-logo">LxL</p>
+          <p>シンプルで本質的なメンズファッションを。<br>素材と余白にこだわったスタイルを提案します。</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Shop</h4>
+            <ul>
+              <li><a href="/product-list.html?category=new">New Arrivals</a></li>
+              <li><a href="/product-list.html?category=tops">Tops</a></li>
+              <li><a href="/product-list.html?category=bottoms">Bottoms</a></li>
+              <li><a href="/product-list.html?category=outer">Outer</a></li>
+              <li><a href="/product-list.html?category=sale">Sale</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-group">
+            <h4>Account</h4>
+            <ul>
+              <li><a href="/login.html">ログイン</a></li>
+              <li><a href="/register.html">新規会員登録</a></li>
+              <li><a href="/mypage.html">マイページ</a></li>
+              <li><a href="/order-history.html">注文履歴</a></li>
+            </ul>
+          </div>
+          <div class="footer-links-group">
+            <h4>Info</h4>
+            <ul>
+              <li><a href="#">お問い合わせ</a></li>
+              <li><a href="#">サイズガイド</a></li>
+              <li><a href="#">特定商取引法</a></li>
+              <li><a href="#">プライバシーポリシー</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 LxL. All Rights Reserved.</p>
+        <nav class="footer-policy">
+          <a href="#">プライバシーポリシー</a>
+          <a href="#">特定商取引法</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ヘッダー スクロール時のクラス付与
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+</body>
+</html>

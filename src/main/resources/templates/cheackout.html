@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>購入手続き | LxL</title>
+  <link rel="stylesheet"th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/checkout.css}">
+</head>
+<body>
+
+  <!-- ============ HEADER（シンプル版） ============ -->
+  <header class="site-header checkout-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/index}" class="header-logo">
+		   <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+	  </a>
+      <div></div><!-- グリッド調整 -->
+      <a th:href="@{/cart}" class="checkout-back-link">← カートに戻る</a>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="page-body">
+    <div class="container">
+
+      <!-- ステップインジケーター -->
+      <div class="checkout-steps">
+        <div class="step active">
+          <span class="step-num">1</span>
+          <span class="step-label">配送先</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span class="step-label">支払い</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span class="step-label">確認・注文</span>
+        </div>
+      </div>
+
+      <!-- 2カラムレイアウト -->
+      <div class="checkout-layout">
+
+        <!-- 左：フォームエリア -->
+        <div class="checkout-form-area">
+
+          <!-- フォーム（Thymeleaf action → 指示書参照） -->
+          <form action="/order/confirm" method="post" class="checkout-form">
+
+            <!-- ① 配送先 -->
+            <section class="checkout-section">
+              <h2 class="checkout-section-title">配送先情報</h2>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">姓 <span class="form-required">*</span></label>
+                  <input type="text" name="lastName"  class="form-control" placeholder="山田">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">名 <span class="form-required">*</span></label>
+                  <input type="text" name="firstName" class="form-control" placeholder="太郎">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">郵便番号 <span class="form-required">*</span></label>
+                <div class="postal-row">
+                  <input type="text" name="postalCode" class="form-control" placeholder="000-0000" maxlength="8">
+                  <button type="button" class="btn btn-outline postal-search-btn">住所検索</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">都道府県 <span class="form-required">*</span></label>
+                <select name="prefecture" class="form-control form-select">
+                  <option value="">選択してください</option>
+                  <option>北海道</option><option>青森県</option><option>岩手県</option>
+                  <option>宮城県</option><option>秋田県</option><option>山形県</option>
+                  <option>福島県</option><option>茨城県</option><option>栃木県</option>
+                  <option>群馬県</option><option>埼玉県</option><option>千葉県</option>
+                  <option>東京都</option><option>神奈川県</option><option>新潟県</option>
+                  <option>富山県</option><option>石川県</option><option>福井県</option>
+                  <option>山梨県</option><option>長野県</option><option>岐阜県</option>
+                  <option>静岡県</option><option>愛知県</option><option>三重県</option>
+                  <option>滋賀県</option><option>京都府</option><option>大阪府</option>
+                  <option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+                  <option>鳥取県</option><option>島根県</option><option>岡山県</option>
+                  <option>広島県</option><option>山口県</option><option>徳島県</option>
+                  <option>香川県</option><option>愛媛県</option><option>高知県</option>
+                  <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+                  <option>熊本県</option><option>大分県</option><option>宮崎県</option>
+                  <option>鹿児島県</option><option>沖縄県</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">市区町村・番地 <span class="form-required">*</span></label>
+                <input type="text" name="address1" class="form-control" placeholder="渋谷区渋谷1-1-1">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">建物名・部屋番号（任意）</label>
+                <input type="text" name="address2" class="form-control" placeholder="LxLビル 101">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">電話番号 <span class="form-required">*</span></label>
+                <input type="tel" name="phone" class="form-control" placeholder="090-0000-0000">
+              </div>
+            </section>
+
+            <!-- ② 支払い方法 -->
+            <section class="checkout-section">
+              <h2 class="checkout-section-title">お支払い方法</h2>
+
+              <!-- 支払い選択（Thymeleaf指示書参照） -->
+              <div class="payment-options">
+
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="credit" class="payment-radio" checked>
+                  <div class="payment-option-body">
+                    <div class="payment-option-header">
+                      <span class="payment-option-name">クレジットカード</span>
+                      <div class="card-icons">
+                        <span class="card-icon">VISA</span>
+                        <span class="card-icon">MC</span>
+                        <span class="card-icon">JCB</span>
+                      </div>
+                    </div>
+                    <!-- カード情報フィールド -->
+                    <div class="card-fields" id="cardFields">
+                      <div class="form-group">
+                        <label class="form-label">カード番号</label>
+                        <input type="text" name="cardNumber" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19">
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label class="form-label">有効期限</label>
+                          <input type="text" name="cardExpiry" class="form-control" placeholder="MM / YY" maxlength="7">
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label">セキュリティコード</label>
+                          <input type="text" name="cardCvc" class="form-control" placeholder="CVC" maxlength="4">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">カード名義人</label>
+                        <input type="text" name="cardName" class="form-control" placeholder="TARO YAMADA">
+                      </div>
+                    </div>
+                  </div>
+                </label>
+
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="bank" class="payment-radio">
+                  <div class="payment-option-body">
+                    <span class="payment-option-name">銀行振込</span>
+                    <p class="payment-option-desc">ご注文後にお振込先をメールでお知らせします。</p>
+                  </div>
+                </label>
+
+                <label class="payment-option">
+                  <input type="radio" name="paymentMethod" value="convenience" class="payment-radio">
+                  <div class="payment-option-body">
+                    <span class="payment-option-name">コンビニ払い</span>
+                    <p class="payment-option-desc">ご注文後に払込票番号をメールでお知らせします。</p>
+                  </div>
+                </label>
+
+              </div>
+            </section>
+
+            <!-- 注文確定ボタン -->
+            <button type="submit" class="btn btn-primary btn-block checkout-submit-btn">
+              注文を確定する
+            </button>
+
+          </form>
+        </div>
+
+        <!-- 右：注文内容確認 -->
+        <div class="checkout-order-summary">
+          <h2 class="cart-summary-title">注文内容</h2>
+
+          <!-- 商品リスト（Thymeleaf指示書参照） -->
+          <div class="order-item">
+            <div class="order-item-img">
+              <img src="../images/product-1.jpg" alt="Oversized Linen Shirt">
+            </div>
+            <div class="order-item-info">
+              <p class="order-item-name">Oversized Linen Shirt</p>
+              <p class="order-item-variant">ホワイト / M × 1</p>
+              <p class="order-item-price">¥12,800</p>
+            </div>
+          </div>
+
+          <div class="order-item">
+            <div class="order-item-img">
+              <img src="../images/product-2.jpg" alt="Wide Tapered Trousers">
+            </div>
+            <div class="order-item-info">
+              <p class="order-item-name">Wide Tapered Trousers</p>
+              <p class="order-item-variant">チャコール / L × 1</p>
+              <p class="order-item-price">¥18,500</p>
+            </div>
+          </div>
+
+          <!-- 合計 -->
+          <div class="order-totals">
+            <div class="cart-summary-row"><span>小計</span><span>¥31,300</span></div>
+            <div class="cart-summary-row"><span>消費税（10%）</span><span>¥3,130</span></div>
+            <div class="cart-summary-row"><span>送料</span><span>¥500</span></div>
+            <div class="cart-summary-total">
+              <span>合計（税込）</span>
+              <span class="cart-total-price">¥34,930</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // 支払い方法切替
+    document.querySelectorAll('.payment-radio').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+        radio.closest('.payment-option').classList.add('selected');
+      });
+    });
+    // 初期選択
+    document.querySelector('.payment-radio:checked')?.closest('.payment-option').classList.add('selected');
+  </script>
+
+</body>
+</html>

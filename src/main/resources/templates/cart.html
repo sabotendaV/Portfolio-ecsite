@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カート | LxL</title>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th;href="@{/css/cart.css}">
+</head>
+<body>
+
+  <!-- ============ HEADER（共通） ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a th:href="@{/index}" class="header-logo">
+		  <img th:src="@{/images/Logo/LxL.offical1.png}" class="logo-image">
+	  </a>
+      <nav class="header-nav">
+        <a th:href="@{/products(category='new')}">New</a>
+        <a th:href="@{/products(category='tops')}">Tops</a>
+        <a th:href="@{/products(category='bottoms')}">Bottoms</a>
+        <a th:href="@{/products(category='outer')}">Outer</a>
+        <a th:href="@{/products(category='sale')}">Sale</a>
+      </nav>
+      <div class="header-actions">
+        <!--  未ログイン：login表示 -->
+        <a th:href="@{/login}"
+        th:if = "${loginUser == null}" sec:authorize="!isAuthenticated()">Login</a>
+        <!-- ログイン済み：mypage表示 ：login表示 -->
+        <a th:href="@{/logout}"
+        th:if = "${loginUser != null}" sec:authorize="isAuthenticated()">Logout</a>
+        <a th:href="@{/cart}" class="cart-link">
+          Cart
+          <span class="badge"
+              th:text="${cartCount}">0</span>
+        </a>
+      </div>
+      <button class="header-menu-btn" id="menuBtn" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <!-- MAIN -->
+  <main class="page-body">
+    <div class="container">
+
+      <nav class="breadcrumb">
+        <a th:href="@{/index}">Home</a>
+        <span class="breadcrumb-sep"></span>
+        <span class="breadcrumb-current">Cart</span>
+      </nav>
+
+      <h1 class="cart-page-title">Shopping Cart</h1>
+
+      <!-- カートに商品がある場合 -->
+      <div class="cart-layout" th:if="${not #lists.isEmpty(cartItems)}">
+
+        <!-- 左：商品リスト -->
+        <div class="cart-items">
+          <div class="cart-items-header">
+            <span>商品</span>
+            <span>小計</span>
+          </div>
+
+          <!-- 商品行ループ -->
+          <div class="cart-item" th:each="item : ${cartItems}">
+            <div class="cart-item-img">
+              <img th:src="@{/images/products/{img}(img=${item.imageUrl})}"
+                   th:alt="${item.productName}">
+            </div>
+            <div class="cart-item-detail">
+              <p class="cart-item-name"       th:text="${item.productName}">商品名</p>
+              <p class="cart-item-unit-price"
+                 th:text="|¥${#numbers.formatInteger(item.price, 1, 'COMMA')}|">¥0</p>
+              <p class="cart-item-variant">数量：<span th:text="${item.quantity}">1</span></p>
+            </div>
+            <div class="cart-item-right">
+              <p class="cart-item-subtotal"
+                 th:text="|¥${#numbers.formatInteger(item.subtotal, 1, 'COMMA')}|">¥0</p>
+              <!-- 削除ボタン -->
+              <form th:action="@{/cart/delete}" method="post">
+                <input type="hidden" name="cartItemId" th:value="${item.id}">
+                <button type="submit" class="cart-item-remove" aria-label="削除">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="cart-continue">
+            <a th:href="@{/products}" class="btn btn-outline">← 買い物を続ける</a>
+          </div>
+        </div>
+
+        <!-- 右：合計パネル -->
+        <div class="cart-summary">
+          <h2 class="cart-summary-title">注文サマリー</h2>
+          <div class="cart-summary-row">
+            <span>小計</span>
+            <span th:text="|¥${#numbers.formatInteger(totalPrice, 1, 'COMMA')}|">¥0</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>消費税（10%）</span>
+            <span th:text="|¥${#numbers.formatInteger(taxAmount, 1, 'COMMA')}|">¥0</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>送料</span>
+            <span th:text="|¥${#numbers.formatInteger(shippingFee, 1, 'COMMA')}|">¥0</span>
+          </div>
+          <div class="cart-summary-total">
+            <span>合計（税込）</span>
+            <span class="cart-total-price"
+                  th:text="|¥${#numbers.formatInteger(grandTotal, 1, 'COMMA')}|">¥0</span>
+          </div>
+          <a th:href="@{/checkout}" class="btn btn-primary btn-block cart-checkout-btn">
+            購入手続きへ
+          </a>
+          <p class="cart-note">※ 送料は一律500円です。</p>
+        </div>
+
+      </div>
+
+      <!-- カートが空の場合 -->
+      <div class="cart-empty" th:if="${#lists.isEmpty(cartItems)}">
+        <div class="cart-empty-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18"/>
+          </svg>
+        </div>
+        <p class="cart-empty-text">カートに商品がありません。</p>
+        <a th:href="@{/products}" class="btn btn-primary">商品を見る</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p class="footer-logo">LxL</p>
+          <p>シンプルで本質的なメンズファッションを。</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-links-group">
+            <h4>Shop</h4>
+            <ul>
+              <li><a th:href="@{/products(category='new')}">New Arrivals</a></li>
+              <li><a th:href="@{/products(category='tops')}">Tops</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 LxL. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    });
+  </script>
+
+</body>
+</html>

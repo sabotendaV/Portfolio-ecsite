@@ -1,0 +1,435 @@
+/* ============================================
+   LxL - product-detail.css
+   商品詳細ページ専用スタイル
+   ============================================ */
+
+/* ---------- 2カラムレイアウト ---------- */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 40px 0 80px;
+}
+
+/* ---------- 画像カラム ---------- */
+.detail-images {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.main-image {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: var(--color-bg-light);
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.main-image:hover img {
+  transform: scale(1.03);
+}
+
+.main-image .product-card-badge {
+  top: 16px;
+  left: 16px;
+}
+
+/* サムネイルリスト */
+.thumb-list {
+  display: flex;
+  gap: 8px;
+}
+
+.thumb-btn {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  padding: 0;
+  opacity: 0.6;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-btn:hover,
+.thumb-btn.active {
+  opacity: 1;
+  border-color: var(--color-primary);
+}
+
+/* ---------- 情報カラム ---------- */
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 8px;
+}
+
+.detail-category {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 12px;
+}
+
+.detail-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+
+.detail-price {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.detail-price-tax {
+  font-size: 0.7rem;
+  font-family: var(--font-body);
+  color: var(--color-secondary);
+  font-weight: 400;
+}
+
+.detail-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 24px 0;
+}
+
+/* ---------- オプション選択 ---------- */
+.detail-option {
+  margin-bottom: 24px;
+}
+
+.detail-option-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  margin-bottom: 12px;
+}
+
+.detail-option-value {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* カラースウォッチ */
+.color-swatches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  outline: 1px solid var(--color-border);
+  transition: all var(--transition);
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-swatch:hover,
+.color-swatch.active {
+  outline-color: var(--color-primary);
+  border-color: var(--color-bg);
+  transform: scale(1.1);
+}
+
+/* サイズボタン */
+.size-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.size-btn {
+  min-width: 52px;
+  height: 52px;
+  padding: 0 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  font-family: var(--font-body);
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--color-bg);
+}
+
+.size-btn:hover,
+.size-btn.active {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.size-guide-link {
+  font-size: 0.7rem;
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 数量コントロール */
+.quantity-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+}
+
+.qty-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--color-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: all var(--transition);
+}
+
+.qty-btn:hover {
+  color: var(--color-primary);
+  background: var(--color-bg-light);
+}
+
+.qty-input {
+  width: 56px;
+  height: 44px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--color-primary);
+  background: none;
+  -moz-appearance: textfield;
+}
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* カートボタン */
+.add-to-cart-form {
+  margin-top: 8px;
+}
+
+.add-to-cart-btn {
+  height: 56px;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  transition: all var(--transition);
+}
+
+.add-to-cart-btn:disabled {
+  background: #CCCCCC;
+  border-color: #CCCCCC;
+  cursor: not-allowed;
+}
+
+.add-to-cart-btn:disabled:hover {
+  background: #CCCCCC;
+  color: var(--color-white);
+  border-color: #CCCCCC;
+}
+
+/* ウィッシュリスト */
+.wishlist-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all var(--transition);
+}
+
+.wishlist-btn:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* 短い説明 */
+.detail-short-desc {
+  font-size: 0.85rem;
+  color: var(--color-secondary);
+  line-height: 2;
+  letter-spacing: 0.03em;
+}
+
+/* ---------- 詳細タブ ---------- */
+.detail-tabs {
+  border-top: 1px solid var(--color-border);
+  padding-bottom: 80px;
+}
+
+.tab-header {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 32px;
+}
+
+.tab-btn {
+  padding: 18px 28px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--color-primary);
+}
+
+.tab-btn.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.tab-panel {
+  display: none;
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+  line-height: 2;
+  letter-spacing: 0.03em;
+  max-width: 640px;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* サイズ表 */
+.size-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.size-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.size-table th,
+.size-table td {
+  padding: 12px 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.size-table th {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-secondary);
+  background: var(--color-bg-light);
+  font-weight: 600;
+}
+
+.size-table tbody tr:hover {
+  background: var(--color-bg-light);
+}
+
+.size-note {
+  font-size: 0.72rem;
+  color: var(--color-secondary);
+  opacity: 0.7;
+  margin-top: 8px;
+}
+
+/* ケアリスト */
+.care-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.care-list li {
+  font-size: 0.85rem;
+  color: var(--color-secondary);
+  padding-left: 16px;
+  position: relative;
+}
+
+.care-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-border);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .detail-layout {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 24px 0 60px;
+  }
+
+  .detail-name {
+    font-size: 1.6rem;
+  }
+
+  .tab-btn {
+    padding: 14px 16px;
+    font-size: 0.65rem;
+  }
+}
