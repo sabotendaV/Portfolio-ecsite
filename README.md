@@ -17,7 +17,7 @@
 
 | トップページ | 商品一覧 |
 |---|---|
-| ![top](docs/top.pn) | ![list](docs/list.png) |
+| ![top](docs/LxL_main.png) | ![list](docs/list.png) |
 
 | 商品詳細 | カート |
 |---|---|
