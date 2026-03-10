@@ -17,11 +17,11 @@
 
 | トップページ | 商品一覧 |
 |---|---|
-| ![top](docs/LxL_main.png) | ![list](docs/list.png) |
+| ![top](docs/LxL_main.png) | ![list](docs/LxL_productlist.png) |
 
 | 商品詳細 | カート |
 |---|---|
-| ![detail](docs/detail.png) | ![cart](docs/cart.png) |
+| ![detail](docs/LxL_productdetail.png) | ![cart](docs/LxL_cart.png) |
 
 ---
 
