@@ -21,7 +21,7 @@
 
 | 商品詳細 | カート |
 |---|---|
-| ![detail](docs/LxL_productdetail.png) | ![cart](docs/LxL_cart.png) |
+| ![detail](docs/LxL_cart.png) | ![cart](docs/LxL_productdetail.png) |
 
 ---
 
